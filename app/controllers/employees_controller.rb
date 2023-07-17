@@ -19,7 +19,12 @@ class EmployeesController < ApplicationController
       job_title: params["job_title"],
       department_id: params["department_id"],
     )
-    render :show
+    
+    if @employee.save
+      render :show
+    else
+      render json: { errors: @employee.errors.full_messages }, status: 422
+    end
   end
 
   def update
@@ -32,7 +37,11 @@ class EmployeesController < ApplicationController
       job_title: params["job_title"] || @employee.job_title,
       department_id: params["department_id"] || @employee.department_id
     )
-    render :show 
+    if @employee.save
+      render :show
+    else
+      render json: { errors: @employee.errors.full_messages }, status: 422
+    end 
   end
 
   def destroy
@@ -41,24 +50,6 @@ class EmployeesController < ApplicationController
     render json: { message: "Record destroyed"}
   end
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 end
-
-

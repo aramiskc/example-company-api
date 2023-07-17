@@ -15,7 +15,11 @@ class DepartmentsController < ApplicationController
       manager: params["manager"],
       code: params["code"],
     )
-    render :show
+    if @department.save
+      render :show
+    else
+      render json: { errors: @department.errors.full_messages }, status: 422
+    end
   end
 
   def update
@@ -26,7 +30,12 @@ class DepartmentsController < ApplicationController
       code: params["code"] || @department.code,
     )
    
-    render :show 
+    if @department.save 
+      render :show
+    else
+      render json: { errors: @department.errors.full_messages }, status: 422
+    end
+    
   end
 
   def destroy
